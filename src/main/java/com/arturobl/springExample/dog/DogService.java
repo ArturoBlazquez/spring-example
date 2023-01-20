@@ -18,7 +18,7 @@ public class DogService {
     }
 
     public Dog getDog(Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new DogNotFoundException(id));
     }
 
     public Dog createDog(Dog dog) {
@@ -26,12 +26,21 @@ public class DogService {
     }
 
     public Dog editDog(Long id, Dog dog) {
+        validateDogExists(id);
+
         dog.setId(id);
         return repository.save(dog);
     }
 
     public void deleteDog(Long id) {
+        validateDogExists(id);
         repository.deleteById(id);
+    }
+
+    private void validateDogExists(Long id) {
+        if (!repository.existsById(id)) {
+            throw new DogNotFoundException(id);
+        }
     }
 
 }
