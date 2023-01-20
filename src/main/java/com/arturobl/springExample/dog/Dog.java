@@ -1,5 +1,8 @@
 package com.arturobl.springExample.dog;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +35,7 @@ public class Dog {
 
     private double weight;
 
-    private int age;
+    @Column(name = "date_of_birth")
+    private LocalDate birthDate;
 
 }
